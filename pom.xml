@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.2</version>
+<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    </parent>
+
+
+    <groupId>com.ginger</groupId>
+    <artifactId>AI-Test</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>AI-Test</name>
+    <description>AI-Test</description>
+
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>Henry</id>
+            <name>Henry Wessels</name>
+            <email>HenrySWessels0099@gamil.com</email>
+            <url>https://github.com/HenryWessels</url>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+                <role>tester</role>
+            </roles>
+            <timezone>+2</timezone>
+            <properties>
+                <picUrl>https://avatars.githubusercontent.com/u/60173629?s=400&amp;u=de3ae943c69abc6f3d4292931e3fcba0a6adf753&amp;v=4</picUrl>
+            </properties>
+        </developer>
+    </developers>
+
+    <properties>
+        <java.version>23</java.version>
+        <springboot.starter.actuator>3.4.2</springboot.starter.actuator>
+        <springboot.starter.jpa>3.4.2</springboot.starter.jpa>
+        <springboot.starter.test>3.4.2</springboot.starter.test>
+        <springboot.starter.web>3.4.2</springboot.starter.web>
+        <spring.framework.restdocs>3.0.3</spring.framework.restdocs>
+        <spring.framework.devtools>3.4.2</spring.framework.devtools>
+        <spring.framework.docker.compose>3.4.2</spring.framework.docker.compose>
+        <spring.framework.configuration.processor>3.4.2</spring.framework.configuration.processor>
+        <h2>2.3.232</h2>
+        <micrometer.tracing>1.4.2</micrometer.tracing>
+        <micrometer.prometheus>1.14.3</micrometer.prometheus>
+    </properties>
+
+    <dependencies>
+        <!-- ========== Spring Starters ========== -->
+        <dependency> <!-- Metrics Monitoring -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${springboot.starter.actuator}</version>
+        </dependency>
+        <dependency> <!-- DB data management -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${springboot.starter.jpa}</version>
+        </dependency>
+        <dependency> <!-- Web framework -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${springboot.starter.web}</version>
+        </dependency>
+        <dependency> <!-- Test framework -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${springboot.starter.test}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- ========== Spring Starters ========== -->
+
+        <dependency> <!-- Dev tools -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>${spring.framework.devtools}</version>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency> <!-- Docker compose support -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-docker-compose</artifactId>
+            <version>${spring.framework.docker.compose}</version>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency> <!-- auto-completion framework -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>${spring.framework.configuration.processor}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency> <!-- Rest documentation -->
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <version>${spring.framework.restdocs}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency> <!-- In memory DB -->
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency> <!-- Logging -->
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+            <version>${micrometer.tracing}</version>
+        </dependency>
+        <dependency> <!-- Logging -->
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.prometheus}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-asciidoctor</artifactId> <!-- mvn dependency:purge-local-repository -->
+            <version>3.0.3</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>generate-docs</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html</backend>
+                            <doctype>book</doctype>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework.restdocs</groupId>
+                        <artifactId>spring-restdocs-asciidoctor</artifactId> <!-- mvn dependency:purge-local-repository -->
+                        <version>3.0.3</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
