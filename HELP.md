@@ -7,6 +7,15 @@ The following was discovered as part of building this project:
 
 # Getting Started
 
+## Starting project
+
+* open CMD (command Prompt) & run the following.
+* Ollama pull llama3:latest
+* Ollama run llama3
+* Build and run project in intelliJ or similar.
+* using a rest call call the endpoint: localhost:8080/test/ask-question
+* pass in a valid question in the body of the rest request.
+
 ### Reference Documentation
 
 For further reference, please consider the following sections:

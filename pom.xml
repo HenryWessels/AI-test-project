@@ -45,15 +45,7 @@
     </developers>
 
     <properties>
-        <java.version>23</java.version>
-        <springboot.starter.actuator>3.4.2</springboot.starter.actuator>
-        <springboot.starter.jpa>3.4.2</springboot.starter.jpa>
-        <springboot.starter.test>3.4.2</springboot.starter.test>
-        <springboot.starter.web>3.4.2</springboot.starter.web>
-        <spring.framework.restdocs>3.0.3</spring.framework.restdocs>
-        <spring.framework.devtools>3.4.2</spring.framework.devtools>
-        <spring.framework.docker.compose>3.4.2</spring.framework.docker.compose>
-        <spring.framework.configuration.processor>3.4.2</spring.framework.configuration.processor>
+        <java.version>21</java.version>
         <h2>2.3.232</h2>
         <micrometer.tracing>1.4.2</micrometer.tracing>
         <micrometer.prometheus>1.14.3</micrometer.prometheus>
@@ -64,50 +56,54 @@
         <dependency> <!-- Metrics Monitoring -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>${springboot.starter.actuator}</version>
         </dependency>
         <dependency> <!-- DB data management -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${springboot.starter.jpa}</version>
         </dependency>
         <dependency> <!-- Web framework -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${springboot.starter.web}</version>
         </dependency>
         <dependency> <!-- Test framework -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${springboot.starter.test}</version>
             <scope>test</scope>
         </dependency>
+        <!-- ========== Spring AI ========== -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-spring-boot-docker-compose</artifactId>-->
+<!--        </dependency>-->
+        <!-- ========== Spring AI ========== -->
         <!-- ========== Spring Starters ========== -->
 
         <dependency> <!-- Dev tools -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <version>${spring.framework.devtools}</version>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency> <!-- Docker compose support -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-docker-compose</artifactId>
-            <version>${spring.framework.docker.compose}</version>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
         <dependency> <!-- auto-completion framework -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>${spring.framework.configuration.processor}</version>
             <optional>true</optional>
         </dependency>
         <dependency> <!-- Rest documentation -->
             <groupId>org.springframework.restdocs</groupId>
             <artifactId>spring-restdocs-mockmvc</artifactId>
-            <version>${spring.framework.restdocs}</version>
             <scope>test</scope>
         </dependency>
 
@@ -129,10 +125,40 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
-            <artifactId>spring-restdocs-asciidoctor</artifactId> <!-- mvn dependency:purge-local-repository -->
+            <artifactId>spring-restdocs-asciidoctor</artifactId>
             <version>3.0.3</version>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
