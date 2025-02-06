@@ -19,6 +19,9 @@ spring:
         pull-model-strategy: WHEN_MISSING
         embedding:
           include: true
+      settings:
+        model: llama3
+        temperature: 0.4
 
 logging:
   level:
