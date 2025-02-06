@@ -1,13 +1,11 @@
 package com.ginger.aitest.rest.controllers;
 
+import com.ginger.aitest.core.services.ai.models.AiModel;
+import com.ginger.aitest.infrastructure.aop.pointcuts.Logging;
+import com.ginger.aitest.infrastructure.aop.pointcuts.ThreadName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.ollama.api.OllamaModel;
-import org.springframework.ai.ollama.api.OllamaOptions;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,49 +16,23 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final ChatModel chatModel;
+    private final AiModel aiService;
 
-    public TestController(@Qualifier("ollamaChatModel") ChatModel chatModel) {
-        this.chatModel = chatModel;
+    public TestController(AiModel model) {
+        this.aiService = model;
     }
 
     @PostMapping("/ask-question")
-    public String askQuestion(@RequestBody String question) {
+    @Logging
+    @ThreadName(customThreadName = "testing-thread-names", useCorrelationId = true)
+    public String askQuestion(@RequestBody String question, @RequestHeader("X-Correlation-ID") String correlationId) {
 
-        logger.info("Question/ Prompt: {}", question);
+        logger.info("Correlation-ID {} - Requested question: {}", correlationId, question);
 
-        isQuestionValid(question);
-
-        ChatResponse response = callOllama(question);
+        aiService.isQuestionValid(question);
+        ChatResponse response = aiService.call(question);
 
         logger.info("AI model Response: {}", response.toString());
         return response.getResults().getFirst().getOutput().getText();
-    }
-
-    private String isQuestionValid(String question) {
-        ChatResponse response = callOllama("Please answer with a boolean Value. Would you be able to respond to this? " + question);
-
-        logger.info("Is question valid: {}", response.getResult().getOutput().getText());
-        return response.getResults().getFirst().getOutput().getText();
-    }
-
-    private ChatResponse callOllama(Prompt prompt) {
-        logger.info("Calling Ollama: {}", prompt.getContents());
-        return chatModel.call(prompt);
-    }
-
-    private ChatResponse callOllama(String Question) {
-        return callOllama(buildOllamaPrompt(Question));
-    }
-
-    private Prompt buildOllamaPrompt(String question) {
-        return new Prompt(question, getOllamaOptions());
-    }
-
-    private OllamaOptions getOllamaOptions() {
-        return OllamaOptions.builder()
-                .model(OllamaModel.LLAMA3)
-                .temperature(0.4)
-                .build();
     }
 }
