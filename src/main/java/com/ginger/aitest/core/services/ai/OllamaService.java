@@ -24,21 +24,27 @@ public class OllamaService implements OllamaServiceModel {
     public OllamaService(@Qualifier("ollamaChatModel") ChatModel chatModel, OllamaProperties ollamaProperties) {
         this.chatModel = chatModel;
         this.ollamaProperties = ollamaProperties;
+
+        logger.debug("OllamaService created using Model: {}",
+                ollamaProperties.getModelString() != null ? ollamaProperties.getModelString() : ollamaProperties.getModel().getName());
     }
 
     public void isQuestionValid(String question) {
         ChatResponse response = call("Please ONLY answer with a boolean Value. Would you be able to respond to the following? \"" + question + "\"");
 
-        logger.info("Is question valid: {}", response.getResult().getOutput().getText());
+        logger.debug("Is question valid: {}", response.getResult().getOutput().getText());
     }
 
     public ChatResponse call(Prompt prompt) {
-        logger.info("Calling Ollama: {}", prompt.getContents());
-        return chatModel.call(prompt);
+        logger.debug("Calling Ollama: {}", prompt.getContents());
+        ChatResponse response = chatModel.call(prompt);
+        logger.trace("AI model Response: {}", response.toString());
+        logger.debug("Question answer: {}", response.getResult().getOutput().getText());
+        return response;
     }
 
     public ChatResponse call(String Question) {
-        return call(buildOllamaPrompt(Question));
+        return call(buildOllamaPrompt("Please answer the following question if possible. \"" + Question + "\""));
     }
 
     private Prompt buildOllamaPrompt(String question) {
@@ -46,8 +52,13 @@ public class OllamaService implements OllamaServiceModel {
     }
 
     private OllamaOptions getOllamaOptions() {
-        return OllamaOptions.builder()
+        if (ollamaProperties.getModelString() == null)
+            return OllamaOptions.builder()
                 .model(ollamaProperties.getModel())
+                .temperature(ollamaProperties.getTemperature())
+                .build();
+        return OllamaOptions.builder()
+                .model(ollamaProperties.getModelString())
                 .temperature(ollamaProperties.getTemperature())
                 .build();
     }

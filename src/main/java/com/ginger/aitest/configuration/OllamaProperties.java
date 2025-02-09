@@ -16,6 +16,12 @@ public class OllamaProperties {
     private OllamaModel model = OllamaModel.LLAMA3;
 
     /**
+     * Ollama Model to load. <br>
+     * Default value will be null.
+     */
+    private String modelString = null;
+
+    /**
      * <B>Unknown</B>.
      */
     private String keepAlive = "true";
@@ -217,6 +223,10 @@ public class OllamaProperties {
         return model;
     }
 
+    public String getModelString() {
+        return modelString;
+    }
+
     public String getKeepAlive() {
         return keepAlive;
     }
@@ -341,6 +351,10 @@ public class OllamaProperties {
     //<editor-fold desc="==== Setters ====">
     public void setModel(OllamaModel model) {
         this.model = model;
+    }
+
+    public void setModelString(String modelString) {
+        this.modelString = modelString;
     }
 
     public void setKeepAlive(String keepAlive) {

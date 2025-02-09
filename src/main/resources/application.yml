@@ -6,18 +6,25 @@ spring:
   devtools:
     add-properties: false
 
+  jpa:
+    open-in-view: false
+
   ai:
     openai:
-      api-key: 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
+      api-key: "insert key here"
 
     ollama:
       base-url: http://localhost:11434
       chat:
         options:
           model: llama3
+
       init:
         pull-model-strategy: WHEN_MISSING
-        embedding:
+        max-retries: 2
+#        embedding: # This is not used in this application yet.
+#          include: true # read this to see why -> https://docs.spring.io/spring-ai/reference/api/embeddings.html
+        chat:
           include: true
       settings:
         model: llama3

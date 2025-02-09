@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/test")
-public class TestController {
+@RequestMapping("/ai")
+public class AiController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final AiModel aiService;
 
-    public TestController(AiModel model) {
+    public AiController(AiModel model) {
         this.aiService = model;
     }
 
@@ -26,13 +26,12 @@ public class TestController {
     @Logging
     @ThreadName(customThreadName = "testing-thread-names", useCorrelationId = true)
     public String askQuestion(@RequestBody String question, @RequestHeader("X-Correlation-ID") String correlationId) {
-
-        logger.info("Correlation-ID {} - Requested question: {}", correlationId, question);
+        logger.info("Requested question: {}", question);
 
         aiService.isQuestionValid(question);
         ChatResponse response = aiService.call(question);
 
-        logger.info("AI model Response: {}", response.toString());
-        return response.getResults().getFirst().getOutput().getText();
+        logger.info("Question answer: {}", response.getResult().getOutput().getText());
+        return response.getResult().getOutput().getText();
     }
 }
