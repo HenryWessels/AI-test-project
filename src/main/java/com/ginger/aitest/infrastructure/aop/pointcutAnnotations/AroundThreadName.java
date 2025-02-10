@@ -1,4 +1,4 @@
-package com.ginger.aitest.infrastructure.aop.pointcuts;
+package com.ginger.aitest.infrastructure.aop.pointcutAnnotations;
 
 import java.lang.annotation.*;
 

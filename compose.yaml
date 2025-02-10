@@ -1,1 +1,16 @@
-#services:
+name: Open-Weather-Service
+
+services:
+  open-meteo:
+    image: ghcr.io/open-meteo/open-meteo
+    stdin_open: true
+    tty: true
+    ports:
+      - 2162:8080
+    command: sync dwd_icon temperature_2m,weather_code,cloudcover,precipitation,showers,rain,lightning_potential,windgusts_10m
+    volumes:
+      - open-meteo-data:/app/data
+
+volumes:
+  open-meteo-data:
+    name: "Open-Meteo-Data"

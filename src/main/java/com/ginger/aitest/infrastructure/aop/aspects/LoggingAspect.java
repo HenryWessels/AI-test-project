@@ -1,6 +1,6 @@
 package com.ginger.aitest.infrastructure.aop.aspects;
 
-import com.ginger.aitest.infrastructure.aop.pointcuts.Logging;
+import com.ginger.aitest.infrastructure.aop.pointcutAnnotations.Logging;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,7 +20,7 @@ public class LoggingAspect {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Around(value = "@annotation(com.ginger.aitest.infrastructure.aop.pointcuts.Logging)")
+    @Around(value = "@annotation(com.ginger.aitest.infrastructure.aop.pointcutAnnotations.Logging)")
     public Object afterReturningAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         logger.trace("Logging time taken for method {}", proceedingJoinPoint.getSignature().getName());
 

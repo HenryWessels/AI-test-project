@@ -1,7 +1,7 @@
 package com.ginger.aitest.infrastructure.aop.aspects;
 
-import com.ginger.aitest.infrastructure.aop.pointcuts.AroundThreadName;
-import com.ginger.aitest.infrastructure.aop.pointcuts.ThreadName;
+import com.ginger.aitest.infrastructure.aop.pointcutAnnotations.AroundThreadName;
+import com.ginger.aitest.infrastructure.aop.pointcutAnnotations.ThreadName;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -21,14 +21,14 @@ public class ThreadNameAspect {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Before("@annotation(com.ginger.aitest.infrastructure.aop.pointcuts.ThreadName)")
+    @Before("@annotation(com.ginger.aitest.infrastructure.aop.pointcutAnnotations.ThreadName)")
     public void changeThreadName(JoinPoint joinPoint) {
         String newThreadName = getBeforeThreadName(joinPoint);
         logger.trace("Changing thread name from [{}] to [{}].", Thread.currentThread().getName(), newThreadName);
         Thread.currentThread().setName(newThreadName);
     }
 
-    @Around("@annotation(com.ginger.aitest.infrastructure.aop.pointcuts.AroundThreadName)")
+    @Around("@annotation(com.ginger.aitest.infrastructure.aop.pointcutAnnotations.AroundThreadName)")
     public Object changeThreadName(ProceedingJoinPoint joinPoint) throws Throwable {
         String oldThreadName = Thread.currentThread().getName();
         String newThreadName = getAroundThreadName(joinPoint);

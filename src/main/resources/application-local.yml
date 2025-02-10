@@ -17,6 +17,10 @@ spring:
 #          "deepseek-r1:1.5b"
         model: llama3
 
+  weather:
+    ip: 127.0.0.1
+    port: 2162
+
 logging:
   level:
     web: debug

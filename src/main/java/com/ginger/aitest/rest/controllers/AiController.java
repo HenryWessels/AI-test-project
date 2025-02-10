@@ -1,8 +1,8 @@
 package com.ginger.aitest.rest.controllers;
 
 import com.ginger.aitest.core.services.ai.models.AiModel;
-import com.ginger.aitest.infrastructure.aop.pointcuts.Logging;
-import com.ginger.aitest.infrastructure.aop.pointcuts.ThreadName;
+import com.ginger.aitest.infrastructure.aop.pointcutAnnotations.Logging;
+import com.ginger.aitest.infrastructure.aop.pointcutAnnotations.ThreadName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.model.ChatResponse;
